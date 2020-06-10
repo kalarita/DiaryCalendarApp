@@ -1,6 +1,7 @@
 package com.example.diarycanlendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -141,6 +142,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_settings:
+                Intent intent = new Intent();
+                intent.setClass(this, SettingActivity.class);
+                startActivity(intent);
+                break;
+        }
         return false;
     }
 }

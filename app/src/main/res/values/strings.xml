@@ -26,4 +26,50 @@
     <string name="nav_settings">设置</string>
     <string name="diary">日记</string>
     <string name="schedule">日程</string>
+
+<!--    刘武微添加的字符串常量-->
+    <!--    返回上一层-->
+    <string name="page_back">返回上一层</string>
+    <!--    标题-->
+    <string name="actionbar_title_settings">设置</string>
+
+    <!--    设置项-->
+    <string name="change_user">更换账号</string>
+    <string name="change_data_picture">自动更新每日图片</string>
+    <string name="change_data_motto">自动更新每日一句</string>
+    <string name="use_cloud">启用网盘</string>
+    <string name="cloud_config">网盘配置</string>
+    <string name="clean_data_cache">清理缓存</string>
+    <string name="app_about">关于</string>
+    <string name="app_check_update">检查更新</string>
+    <string name="app_feedback">反馈</string>
+
+    <!--    使用的配置文件名-->
+    <string name="app_config">config</string>
+    <!--    使用的配置文件中的key-->
+    <string name="auto_picture">auto_picture</string>
+    <string name="auto_motto">auto_motto</string>
+    <string name="auto_update">auto_update</string>
+    <string name="cloud_url">cloud_url</string>
+    <string name="cloud_uid">cloud_uid</string>
+    <string name="cloud_psd">cloud_psd</string>
+
+    <!--    Toast文本-->
+    <string name="no_update">当前版本已经是最新版本</string>
+    <string name="clean_data_succeed">清除成功</string>
+    <string name="update_to_cloud">update_to_cloud</string>
+    <string name="about_us">本软件由鲍春生领导，毛瑞，王建阳，刘武微参与，彭发旋友情支持合作开发</string>
+    <string name="thanks_for_feed_back">感谢您的反馈！</string>
+    <string name="cloud_config_succeed">网盘配置成功！</string>
+    <string name="cloud_config_failed">网盘配置失败！请检查账号密码</string>
+
+    <!--    云盘选择-->
+    <string-array name="cloud_from">
+        <item>坚果云</item>
+    </string-array>
+
+    <string-array name="cloud_url">
+        <item>https://dav.jianguoyun.com/dav/</item>
+    </string-array>
+
 </resources>

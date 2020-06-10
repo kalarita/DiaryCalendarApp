@@ -313,7 +313,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                             tpurl = getResources().getStringArray(R.array.cloud_url)[i];
                         }
                     }
-                    final String surl = tpurl;
+                    final String surl = "https://dav.jianguoyun.com/dav/"; // 写死先
                     final String suid = uid.getText().toString();
                     final String spsd = psd.getText().toString();
 

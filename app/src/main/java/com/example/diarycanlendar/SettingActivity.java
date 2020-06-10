@@ -1,5 +1,6 @@
 package com.example.diarycanlendar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.diarycanlendar.utils.WebDavJackRabbitUtil;
 import com.google.android.material.button.MaterialButton;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
     private SharedPreferences config;
     private SharedPreferences.Editor editor;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,31 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         // 反馈
         LinearLayout ly8 = (LinearLayout)findViewById(R.id.app_feedback);
         initLayout(ly8, R.string.app_feedback, false, false);
+
+        // 申明handle
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what){
+                    case 0x1:
+                        Bundle bundle = msg.getData();
+                        String surl = bundle.getString("url");
+                        String suid = bundle.getString("uid");
+                        String spsd = bundle.getString("psd");
+                        Toast.makeText(getBaseContext(),
+                                getResources().getString(R.string.cloud_config_succeed)
+                                        +"\nurl = " + surl + "; uid = " + suid + "; psw = " + spsd,
+                                Toast.LENGTH_SHORT).show();
+                    case 0x2:
+                        Toast.makeText(getBaseContext(),
+                                getResources().getString(R.string.cloud_config_failed),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+
+
     }
 
     /**
@@ -217,6 +247,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 switch_compat.setChecked(!switch_compat.isChecked());
                 editor.putString(getResources().getString(R.string.auto_picture),
                         String.valueOf(switch_compat.isChecked()));
+                editor.commit();
+                return;
             }
         }
     }
@@ -229,6 +261,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 switch_compat.setChecked(!switch_compat.isChecked());
                 editor.putString(getResources().getString(R.string.auto_motto),
                         String.valueOf(switch_compat.isChecked()));
+                editor.commit();
+                return;
             }
         }
     }
@@ -241,26 +275,26 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 switch_compat.setChecked(!switch_compat.isChecked());
                 editor.putString(getResources().getString(R.string.auto_update),
                         String.valueOf(switch_compat.isChecked()));
-                if(switch_compat.isChecked()){
-                    //
-                }else{
-                   //
-                }
+                editor.commit();
+                return;
             }
         }
     }
 
 
     private void cloudConfig(){
-            final Context mContext = SettingActivity.this;
+        final Context mContext = SettingActivity.this;
+        if(Boolean.valueOf(
+                config.getString(
+                        getResources().getString(R.string.auto_update), "false"))) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             LayoutInflater inflater = LayoutInflater.from(mContext);
             View v = inflater.inflate(R.layout.setting_item_cloud, null);
             MaterialButton btn_sure = (MaterialButton) v.findViewById(R.id.cloud_setting_positive);
             MaterialButton btn_cancel = (MaterialButton) v.findViewById(R.id.cloud_setting_negative);
-            final Spinner sp  = (Spinner)v.findViewById(R.id.cloud_url);
-            final EditText uid = (EditText)v.findViewById(R.id.cloud_uid);
-            final EditText psd = (EditText)v.findViewById(R.id.cloud_psd);
+            final Spinner sp = (Spinner) v.findViewById(R.id.cloud_url);
+            final EditText uid = (EditText) v.findViewById(R.id.cloud_uid);
+            final EditText psd = (EditText) v.findViewById(R.id.cloud_psd);
 
             //builer.setView(v);//这里如果使用builer.setView(v)，自定义布局只会覆盖title和button之间的那部分
             final Dialog dialog = builder.create();
@@ -273,28 +307,45 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                 @Override
                 public void onClick(View v) {
-                    String surl= "";
-                    for(int i = 0; i < sp.getChildCount(); i ++){
-                        if(sp.getChildAt(i).isSelected()){
-                            surl = getResources().getStringArray(R.array.cloud_url)[i];
+                    String tpurl = "";
+                    for (int i = 0; i < sp.getChildCount(); i++) {
+                        if (sp.getChildAt(i).isSelected()) {
+                            tpurl = getResources().getStringArray(R.array.cloud_url)[i];
                         }
                     }
-                    String suid = uid.getText().toString();
-                    String spsd = psd.getText().toString();
-                    if(true){
-                        editor.putString(getResources().getString(R.string.cloud_url), surl);
-                        editor.putString(getResources().getString(R.string.cloud_uid), suid);
-                        editor.putString(getResources().getString(R.string.cloud_psd), spsd);
-                        editor.commit();
-                        dialog.dismiss();
-                        Toast.makeText(mContext,
-                                getResources().getString(R.string.cloud_config_succeed),
-                                Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(mContext,
-                                getResources().getString(R.string.cloud_config_succeed),
-                                Toast.LENGTH_LONG).show();
-                    }
+                    final String surl = tpurl;
+                    final String suid = uid.getText().toString();
+                    final String spsd = psd.getText().toString();
+
+                    // 不开启线程会陷入阻塞
+//                    WebDavJackRabbitUtil utils = new WebDavJackRabbitUtil(surl, suid, spsd);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            WebDavJackRabbitUtil utils = new WebDavJackRabbitUtil(surl, suid, spsd);
+                            Message msg = new Message();
+                            if (utils.initCloud()) {
+                                synchronized (editor){ // 防止并发导致数据不一致
+                                    editor.putString(getResources().getString(R.string.cloud_url), surl);
+                                    editor.putString(getResources().getString(R.string.cloud_uid), suid);
+                                    editor.putString(getResources().getString(R.string.cloud_psd), spsd);
+                                    editor.commit();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("url", surl);
+                                    bundle.putString("uid", suid);
+                                    bundle.putString("psd", spsd);
+                                    msg.setData(bundle);
+                                }
+                                msg.what=0x1;
+                            } else {
+                                msg.what=0x2;
+                            }
+                            Bundle bundle = new Bundle();
+                            msg.setData(bundle);
+                            mHandler.sendMessage(msg);
+                        }
+                    }.start();
+                    dialog.dismiss();
                 }
             });
 
@@ -305,9 +356,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dialog.dismiss();
                 }
             });
+        }else{
+            Toast.makeText(mContext,
+                    "请先启用网盘！",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void cleanDataCache(){
+        // ...
         Toast.makeText(this, R.string.clean_data_succeed,Toast.LENGTH_LONG).show();
     }
 

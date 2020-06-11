@@ -16,7 +16,7 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_with_title"
             android:layout_width="match_parent"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="5dp"
@@ -24,8 +24,7 @@
             android:layout_marginBottom="3dp"
             android:elevation="4dp"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/toolbar_shape"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:background="@drawable/toolbar_shape">
 
             <ImageView
                 android:id="@+id/page_back"

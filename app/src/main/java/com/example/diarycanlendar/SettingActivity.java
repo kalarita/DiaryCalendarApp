@@ -44,10 +44,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         //状态栏透明
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //获取工具栏
-        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
+        Toolbar toolbar = findViewById(R.id.toolbar_with_title);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
 //        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
         // 根据配置文件配置初始化ui
         config = getSharedPreferences(String.valueOf(R.string.app_config),MODE_PRIVATE);
         editor = config.edit();
@@ -62,9 +63,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         // 设置界面标题
-        ViewGroup settingPage = (ViewGroup)findViewById(R.id.toolbar);
-        for(int i = 0; i < settingPage.getChildCount(); i ++){
-            View v = settingPage.getChildAt(i);
+        ViewGroup settingPage_header = (ViewGroup)findViewById(R.id.header_setting_page);
+        for(int i = 0; i < settingPage_header.getChildCount(); i ++){
+            View v = settingPage_header.getChildAt(i);
             if(v instanceof TextView){
                 ((TextView) v).setText(getResources().getString(R.string.actionbar_title_settings));
             }

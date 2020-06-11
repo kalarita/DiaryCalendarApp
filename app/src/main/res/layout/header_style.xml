@@ -16,7 +16,7 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_with_title"
+            android:id="@+id/toolbar_page_title"
             android:layout_width="match_parent"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="5dp"

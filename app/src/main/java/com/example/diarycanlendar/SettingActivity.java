@@ -44,11 +44,32 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         //状态栏透明
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //获取工具栏
-        Toolbar toolbar = findViewById(R.id.toolbar_with_title);
+        Toolbar toolbar = findViewById(R.id.toolbar_page_title);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 //        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        // 设置工具栏中的界面标题
+        for(int i = 0; i < toolbar.getChildCount(); i ++){
+            View v = toolbar.getChildAt(i);
+            if(v instanceof TextView){
+                ((TextView) v).setText(getResources().getString(R.string.actionbar_title_settings));
+                break;
+            }
+        }
+        // 返回上一层
+        for(int i = 0; i < toolbar.getChildCount(); i ++){
+            View v = toolbar.getChildAt(i);
+            if(v instanceof ImageView){
+               v.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       finish();
+                   }
+               });
+               break;
+            }
+        }
         // 根据配置文件配置初始化ui
         config = getSharedPreferences(String.valueOf(R.string.app_config),MODE_PRIVATE);
         editor = config.edit();
@@ -60,15 +81,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
         if(!config.contains(getResources().getString(R.string.update_to_cloud))){
             editor.putString(getResources().getString(R.string.auto_update), "true");
-        }
-
-        // 设置界面标题
-        ViewGroup settingPage_header = (ViewGroup)findViewById(R.id.header_setting_page);
-        for(int i = 0; i < settingPage_header.getChildCount(); i ++){
-            View v = settingPage_header.getChildAt(i);
-            if(v instanceof TextView){
-                ((TextView) v).setText(getResources().getString(R.string.actionbar_title_settings));
-            }
         }
 
         // 初始化是否自动获取每日图片 默认 是, 并注册监听器
@@ -91,15 +103,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         );
         LinearLayout ly3 = (LinearLayout)findViewById(R.id.update_to_cloud);
         initLayout(ly3, R.string.use_cloud, true, update_to_cloud);
-
-        //
-        ImageView back = findViewById(R.id.page_back); // 返回上一层
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         // 更换账号
         LinearLayout ly4 = (LinearLayout)findViewById(R.id.change_user);

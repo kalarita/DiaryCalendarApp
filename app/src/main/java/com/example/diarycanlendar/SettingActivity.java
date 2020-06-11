@@ -1,8 +1,10 @@
 package com.example.diarycanlendar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -41,7 +43,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         //状态栏透明
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
+        //获取工具栏
+        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
         // 根据配置文件配置初始化ui
         config = getSharedPreferences(String.valueOf(R.string.app_config),MODE_PRIVATE);
         editor = config.edit();
@@ -53,6 +59,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
         if(!config.contains(getResources().getString(R.string.update_to_cloud))){
             editor.putString(getResources().getString(R.string.auto_update), "true");
+        }
+
+        // 设置界面标题
+        ViewGroup settingPage = (ViewGroup)findViewById(R.id.toolbar);
+        for(int i = 0; i < settingPage.getChildCount(); i ++){
+            View v = settingPage.getChildAt(i);
+            if(v instanceof TextView){
+                ((TextView) v).setText(getResources().getString(R.string.actionbar_title_settings));
+            }
         }
 
         // 初始化是否自动获取每日图片 默认 是, 并注册监听器

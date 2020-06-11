@@ -143,10 +143,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_settings:
+            // 实现一个界面跳转或者逻辑后在此编写
+            case R.id.nav_diary: // 点击 日记 的行为
+                break;
+            case R.id.nav_schedule: // 点击 日日程 的行为
+                break;
+            case R.id.nav_about: // 点击 关于 的行为
+                break;
+            case R.id.nav_settings: // 点击 设置 的行为 ：跳转导设置界面
                 Intent intent = new Intent();
                 intent.setClass(this, SettingActivity.class);
                 startActivity(intent);
+                break;
+            default:
                 break;
         }
         return false;

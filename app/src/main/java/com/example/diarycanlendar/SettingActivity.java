@@ -24,7 +24,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.diarycanlendar.utils.WebDavJackRabbitUtil;
+import com.example.diarycanlendar.utils.WebDav.WebDavJackRabbitUtil;
+import com.example.diarycanlendar.utils.WebDav.WebDavSardineUtil;
 import com.google.android.material.button.MaterialButton;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
@@ -322,7 +323,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     new Thread(){
                         @Override
                         public void run() {
-                            WebDavJackRabbitUtil utils = new WebDavJackRabbitUtil(surl, suid, spsd);
+                            WebDavSardineUtil utils = new WebDavSardineUtil(surl, suid, spsd);
                             Message msg = new Message();
                             if (utils.initCloud()) {
                                 synchronized (editor){ // 防止并发导致数据不一致

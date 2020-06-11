@@ -1,4 +1,4 @@
-package com.example.diarycanlendar.utils;
+package com.example.diarycanlendar.utils.WebDav;
 
 
 import com.github.sardine.DavResource;

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.diarycanlendar.utils.WebDav.WebDavJackRabbitUtil;
 import com.example.diarycanlendar.utils.WebDav.WebDavSardineUtil;
+import com.example.diarycanlendar.utils.WebDav.WebDavUtil;
 import com.google.android.material.button.MaterialButton;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
@@ -122,6 +123,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                                 getResources().getString(R.string.cloud_config_succeed)
                                         +"\nurl = " + surl + "; uid = " + suid + "; psw = " + spsd,
                                 Toast.LENGTH_SHORT).show();
+                        break;
                     case 0x2:
                         Toast.makeText(getBaseContext(),
                                 getResources().getString(R.string.cloud_config_failed),
@@ -130,9 +132,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         };
-
-
     }
+
 
     /**
      * 对设置界面里面的控件进行初始化，初始化包括，状态， 标题，以及监听事件
@@ -323,7 +324,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     new Thread(){
                         @Override
                         public void run() {
-                            WebDavSardineUtil utils = new WebDavSardineUtil(surl, suid, spsd);
+                            WebDavUtil utils = new WebDavSardineUtil(surl, suid, spsd);
                             Message msg = new Message();
                             if (utils.initCloud()) {
                                 synchronized (editor){ // 防止并发导致数据不一致
@@ -340,9 +341,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                                 msg.what=0x1;
                             } else {
                                 msg.what=0x2;
+                                Bundle bundle = new Bundle();
+                                msg.setData(bundle);
                             }
-                            Bundle bundle = new Bundle();
-                            msg.setData(bundle);
                             mHandler.sendMessage(msg);
                         }
                     }.start();

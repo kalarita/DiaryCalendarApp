@@ -1,10 +1,11 @@
 package com.example.diarycanlendar.utils.WebDav;
 
+import com.thegrizzlylabs.sardineandroid.DavResource;
+import com.thegrizzlylabs.sardineandroid.Sardine;
+import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine;
 
-import com.github.sardine.DavResource;
-import com.github.sardine.Sardine;
-import com.github.sardine.SardineFactory;
-
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +17,7 @@ public class WebDavSardineUtil extends WebDavBaseTool {
 
     public WebDavSardineUtil(String baseUri, String userName, String passWord){
         super(baseUri, userName, passWord);
-        sardine = SardineFactory.begin();
+        sardine = new OkHttpSardine();
         sardine.setCredentials(userName, passWord);
     }
 
@@ -34,7 +35,16 @@ public class WebDavSardineUtil extends WebDavBaseTool {
 
     @Override
     public int uploadF(String url, FileInputStream fis) throws IOException {
-        sardine.put(url, fis);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] tp = new byte[1024];
+        int len = -1;
+        while((len = bis.read(tp)) != -1){
+            bos.write(tp, 0, tp.length);
+        }
+        bis.close();
+        bos.close();
+        sardine.put(url, bos.toByteArray());
         return 201;
     }
 
@@ -52,7 +62,6 @@ public class WebDavSardineUtil extends WebDavBaseTool {
 
     @Override
     public String[] getFilesF(String url) throws IOException {
-        Sardine sardine = SardineFactory.begin();
         List<DavResource> resources = sardine.list(url);
         String[] res = new String[resources.size()];
         for (int i = 0; i < resources.size(); i ++)

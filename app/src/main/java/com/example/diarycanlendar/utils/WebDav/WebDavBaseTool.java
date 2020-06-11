@@ -11,7 +11,7 @@ import java.net.URI;
 public class WebDavBaseTool extends AbstractWebDavBaseTool {
 
     public static final String WORK_PATH_1 = "diarycanlendar";
-    public static final String WORK_PATH= "diarycanlendar/backup/";
+    public static final String WORK_PATH= "diarycanlendar/";
     private String username, password;
     private URI uri;
 
@@ -61,6 +61,18 @@ public class WebDavBaseTool extends AbstractWebDavBaseTool {
         out.close();
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isOk() {
+        return isOk;
+    }
 
     @Override
     public int deleteF(String url) throws IOException {

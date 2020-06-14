@@ -89,6 +89,7 @@ public class splash_activity extends AppCompatActivity {
         }
     }
 
+    //
     private void setidea() {
             String urlString  = "http://173.82.168.215:5000/todayidea";
             try {

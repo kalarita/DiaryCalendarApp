@@ -14,14 +14,19 @@
             android:title="@string/schedule"/>
     </group>
     <group android:id="@+id/group_about">
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="@string/about" />
+<!--        <item-->
+<!--            android:id="@+id/nav_about"-->
+<!--            android:icon="@drawable/ic_info_outline_black_24dp"-->
+<!--            android:title="@string/about" />-->
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/nav_settings" />
-
+    </group>
+    <group android:id="@+id/group_exit">
+        <item
+            android:id="@+id/exit"
+            android:icon="@drawable/ic_exit_to_app_black_36dp"
+            android:title="注销登录"/>
     </group>
 </menu>

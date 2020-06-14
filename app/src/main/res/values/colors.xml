@@ -6,7 +6,9 @@
     <color name="skyblue">#2B6B96</color>
     <color name="black">#000000</color>
     <color name="halftransparent">#1AFFFFFF</color>
+    <color name="texttransparent">#4D5f83bd</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="fab_color">#5f83bd</color>
+    <color name="diarydetails">#99FFFFFF</color>
 </resources>

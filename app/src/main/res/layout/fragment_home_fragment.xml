@@ -19,38 +19,29 @@
             android:clickable="true"
             android:elevation="4dp"
             android:foreground="?attr/selectableItemBackground">
-<androidx.appcompat.widget.AppCompatImageView
-    android:layout_gravity="center"
-    android:id="@+id/card1_img"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-
-    />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/card1_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
         </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="80dp"
-            android:background="@color/transparent"
-            app:cardBackgroundColor="@color/transparent"
-            android:clickable="true"
-            android:elevation="4dp"
-            >
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/card2_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:radius="10dp"
-                android:textSize="20dp"
+                android:textSize="16sp"
                 android:typeface="serif"
-                android:layout_marginStart="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="left"
                 />
 
-        </com.google.android.material.card.MaterialCardView>
+
 
         <!--<include layout="@layout/ad_banner_main_card" />-->
     </LinearLayout>

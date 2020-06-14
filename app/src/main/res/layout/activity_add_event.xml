@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg1_blur"
+    >
+
+    <include
+        layout="@layout/part_common_title"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingRight="20dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+            </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/update_event_et_date"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:hint="选择日程的日期"
+                android:background="@drawable/shape_add_diary_title"
+                android:enabled="true"
+                android:gravity="top"
+                android:maxLines="10"
+                android:minLines="8"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_vertical"
+
+                android:scrollbars="vertical"
+                />
+
+            <ImageView
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:id="@+id/iv_date_selector"
+                android:src="@drawable/calendar"
+                android:layout_gravity="center_vertical"
+                >
+
+            </ImageView>
+        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/update_event_et_event"
+                android:hint="    请输入事件"
+                >
+
+            </EditText>
+
+
+
+        </LinearLayout>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/right_labels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            app:fab_expandDirection="right"
+            app:fab_addButtonColorNormal="@color/fab_color"
+            >
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
